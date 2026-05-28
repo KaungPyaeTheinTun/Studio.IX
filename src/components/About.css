@@ -1,0 +1,95 @@
+.about {
+  padding: var(--space-2xl) var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.about-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.eyebrow {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  margin-bottom: var(--space-lg);
+}
+
+.stats { display: flex; flex-direction: column; gap: var(--space-md); }
+
+.stat { display: flex; flex-direction: column; gap: 4px; }
+
+.stat-number {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(52px, 6vw, 88px);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--color-ink);
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--color-muted);
+  text-transform: uppercase;
+}
+
+.about-right {
+  padding-top: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.about-portrait {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #d6d2c8 0%, #b0aba2 50%, #c8c4bc 100%);
+  position: relative;
+  overflow: hidden;
+}
+.about-portrait::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(17,17,17,0.2) 0%, transparent 60%);
+}
+
+.about-text {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: clamp(15px, 1.4vw, 18px);
+  line-height: 1.75;
+  color: var(--color-ink);
+}
+
+.about-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--color-ink);
+  padding-bottom: 3px;
+  width: fit-content;
+  transition: gap var(--duration-fast) ease, color var(--duration-fast) ease;
+}
+.about-cta:hover { gap: var(--space-sm); color: var(--color-accent-dk); border-color: var(--color-accent-dk); }
+
+@media (max-width: 900px) {
+  .about-inner { grid-template-columns: 1fr; gap: var(--space-lg); }
+  .about-right { padding-top: 0; }
+}

@@ -1,0 +1,62 @@
+.reel {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.reel-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #1a1a18 0%, #111111 40%, #2a2820 70%, #0e0e0c 100%);
+  z-index: 0;
+}
+.reel-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(200,240,74,0.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(200,240,74,0.04) 0%, transparent 50%);
+}
+
+.reel-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: var(--space-xl) var(--space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.reel-text {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(36px, 6vw, 88px);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: #F5F3EE;
+  mix-blend-mode: difference;
+}
+
+.reel-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 16px;
+  padding: 18px 44px;
+  background: var(--color-accent);
+  color: var(--color-ink);
+  border-radius: 100px;
+  text-decoration: none;
+  transition: background var(--duration-fast) ease, transform var(--duration-fast) ease;
+}
+.reel-cta:hover {
+  background: var(--color-accent-dk);
+  transform: scale(1.03);
+}

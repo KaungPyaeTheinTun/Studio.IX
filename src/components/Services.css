@@ -1,0 +1,92 @@
+.services {
+  position: relative;
+  background: var(--color-ink);
+  padding: var(--space-2xl) var(--space-md);
+  overflow: hidden;
+}
+
+.services-ghost {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(120px, 20vw, 260px);
+  letter-spacing: -0.05em;
+  color: rgba(255,255,255,0.03);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.services-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.services-eyebrow {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  margin-bottom: var(--space-md);
+}
+
+.services-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(52px, 8vw, 120px);
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  color: #F5F3EE;
+  margin-bottom: var(--space-xl);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: var(--space-lg);
+}
+
+.service-category {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  margin-bottom: var(--space-md);
+}
+
+.service-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.service-list li {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: clamp(15px, 1.4vw, 18px);
+  color: rgba(245,243,238,0.7);
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  transition: color var(--duration-fast) ease, padding-left var(--duration-fast) ease;
+  cursor: default;
+}
+.service-list li:hover {
+  color: #F5F3EE;
+  padding-left: 8px;
+}
+
+@media (max-width: 768px) {
+  .services-grid { grid-template-columns: 1fr; gap: var(--space-md); }
+}

@@ -1,0 +1,125 @@
+.testimonials {
+  padding: var(--space-2xl) 0;
+  border-top: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.testimonials-header {
+  padding: 0 var(--space-md);
+  margin-bottom: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.testimonials-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(40px, 6vw, 88px);
+  letter-spacing: -0.04em;
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+.testimonials-track {
+  display: flex;
+  gap: var(--space-md);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: var(--space-sm) var(--space-md) var(--space-lg);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.testimonials-track::-webkit-scrollbar { display: none; }
+
+.testimonial-card {
+  flex: 0 0 clamp(300px, 42vw, 520px);
+  scroll-snap-align: center;
+  background: var(--color-surface);
+  border-radius: 16px;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  border: 1px solid var(--color-border);
+  transition: transform var(--duration-fast) ease;
+}
+.testimonial-card:hover { transform: translateY(-4px); }
+
+.quote-mark {
+  font-family: var(--font-display);
+  font-size: 80px;
+  line-height: 0.5;
+  font-weight: 800;
+}
+
+.quote-text {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: clamp(15px, 1.4vw, 17px);
+  line-height: 1.75;
+  color: var(--color-ink);
+  flex: 1;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-md);
+}
+
+.author-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--color-ink);
+  flex-shrink: 0;
+}
+
+.author-name {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--color-ink);
+}
+.author-role {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-muted);
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+.testimonial-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-border);
+  border: none;
+  cursor: none;
+  transition: background var(--duration-fast) ease, transform var(--duration-fast) ease, width var(--duration-fast) ease;
+}
+.dot.active {
+  background: var(--color-ink);
+  width: 24px;
+  border-radius: 4px;
+}
