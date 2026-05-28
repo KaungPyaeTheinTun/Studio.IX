@@ -41,13 +41,19 @@
 .services-title {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(52px, 8vw, 120px);
+  
+  /* FIX: Lowered the mobile floor from 52px to 32px to match mobile screens perfectly */
+  font-size: clamp(32px, 8vw, 120px);
+  
   letter-spacing: -0.04em;
-  line-height: 0.9;
+  line-height: 0.95; /* Marginally widened line spacing for compact mobile text stack tracking */
   color: #F5F3EE;
   margin-bottom: var(--space-xl);
+  
+  /* Layout Safety Guardrails */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
-
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

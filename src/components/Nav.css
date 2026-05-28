@@ -27,6 +27,8 @@
   letter-spacing: -0.02em;
   color: var(--color-ink);
   text-decoration: none;
+  z-index: 101; /* Keeps logo on top of the mobile white panel overlay */
+  transition: color var(--duration-base) ease;
 }
 
 .nav-links {
@@ -61,7 +63,7 @@
   transform: scale(1.03);
 }
 
-/* Hamburger */
+/* Hamburger & Close Icon Structural System */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -69,7 +71,8 @@
   background: none;
   border: none;
   padding: 4px;
-  cursor: none;
+  cursor: pointer;
+  z-index: 101; /* Keeps close button on top of the mobile white panel overlay */
 }
 .hamburger span {
   display: block;
@@ -77,15 +80,25 @@
   height: 2px;
   background: var(--color-ink);
   border-radius: 2px;
-  transition: transform var(--duration-fast) var(--ease-out-expo),
-              opacity var(--duration-fast) ease;
+  transition: transform 0.4s var(--ease-out-expo),
+              opacity 0.4s ease,
+              background-color var(--duration-base) ease;
   transform-origin: center;
 }
-.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Mobile menu */
+/* Close Icon Keyframe Transitions (Converts 3 lines into an 'X') */
+.hamburger.open span:nth-child(1) { 
+  transform: translateY(7px) rotate(45deg); 
+}
+.hamburger.open span:nth-child(2) { 
+  opacity: 0; 
+  transform: scaleX(0); 
+}
+.hamburger.open span:nth-child(3) { 
+  transform: translateY(-7px) rotate(-45deg); 
+}
+
+/* Mobile full-screen drop panel menu wrapper */
 .mobile-menu {
   position: fixed;
   inset: 0;
@@ -137,7 +150,30 @@
 }
 .mobile-menu.open .mobile-cta { opacity: 1; transform: translateY(0); }
 
+/* --- Responsive Media Viewport Breaks --- */
 @media (max-width: 768px) {
   .nav-links, .nav-cta { display: none; }
   .hamburger { display: flex; }
+
+  /* 1. Sets mobile drop panel background to solid pure white */
+  .mobile-menu {
+    background: #ffffff; 
+  }
+
+  /* 2. Swaps text inside active links from white to dark ink text */
+  .mobile-menu li a {
+    color: var(--color-ink);
+  }
+
+  /* 3. Give your links a hover accent color when active over white */
+  .mobile-menu li a:hover {
+    color: #0055ff; /* Feel free to swap this hex with your custom --color-accent property */
+  }
+
+  /* 4. Ensures the call to action remains legible over white backgrounds */
+  .mobile-cta {
+    color: var(--color-ink);
+    border-bottom: 2px solid var(--color-ink);
+    padding-bottom: 4px;
+  }
 }

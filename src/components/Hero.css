@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   height: 100svh;
-  min-height: 600px;
+  min-height: 500px; /* Reduced slightly for smaller mobile heights */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -13,6 +13,7 @@
   position: relative;
   z-index: 2;
   pointer-events: none;
+  width: 100%;
 }
 
 .hero-word-wrap {
@@ -31,13 +32,15 @@
 .hero-word {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(80px, 14vw, 180px);
+  /* Dropped minimum font size to 48px to fit 320px viewports safely */
+  font-size: clamp(48px, 12vw, 180px); 
   line-height: 0.9;
   letter-spacing: -0.03em;
   color: var(--color-ink);
   white-space: nowrap;
 }
 
+/* Desktop structural alignments */
 .hero-word-wrap:nth-child(1) .hero-word { text-align: left; }
 .hero-word-wrap:nth-child(2) .hero-word {
   text-align: center;
@@ -47,10 +50,10 @@
 }
 .hero-word-wrap:nth-child(3) .hero-word { text-align: right; }
 
-/* Floating cards */
+/* Floating cards base styling */
 .float-card {
   position: absolute;
-  width: clamp(100px, 12vw, 180px);
+  width: clamp(90px, 12vw, 180px);
   aspect-ratio: 3/4;
   border-radius: 12px;
   z-index: 1;
@@ -59,7 +62,7 @@
   box-shadow: 0 24px 60px rgba(0,0,0,0.12), 0 8px 20px rgba(0,0,0,0.08);
 }
 
-/* Marquee */
+/* Marquee setup */
 .hero-marquee {
   position: absolute;
   bottom: 0;
@@ -72,6 +75,12 @@
   z-index: 3;
 }
 
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
 .marquee-item {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -79,11 +88,36 @@
   color: var(--color-muted);
   text-transform: uppercase;
   white-space: nowrap;
-  padding-right: 4px;
+  padding-right: 2rem; /* Clean spacing between track loops */
 }
 
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.33%); } /* Matches 3 repeating sets cleanly */
+}
+
+/* --- Responsive Breakpoint --- */
 @media (max-width: 768px) {
-  .float-card:nth-child(3) { display: none; }
-  .float-card { width: clamp(80px, 20vw, 120px); }
-  .hero-word-wrap:nth-child(2) .hero-word { padding-left: 0; text-align: center; }
+  /* Center text elements so they don't clip off screen borders */
+  .hero-word-wrap:nth-child(1) .hero-word,
+  .hero-word-wrap:nth-child(2) .hero-word,
+  .hero-word-wrap:nth-child(3) .hero-word { 
+    text-align: center; 
+    padding-left: 0;
+  }
+
+  /* Make stroke text slightly legible on tiny screens */
+  .hero-word-wrap:nth-child(2) .hero-word {
+    -webkit-text-stroke: 1px var(--color-ink);
+  }
+
+  /* Scale down and tuck cards safely behind text or into corners */
+  .float-card { 
+    width: clamp(70px, 18vw, 100px); 
+  }
+  
+  /* Override inline CSS positions cleanly with custom class names (added in JS below) */
+  .float-card.card-0 { top: 12% !important; left: 70% !important; }
+  .float-card.card-1 { top: 72% !important; left: 8% !important; }
+  .float-card.card-2 { display: none; } /* Hide the third card entirely to reduce clutter */
 }

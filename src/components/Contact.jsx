@@ -1,5 +1,6 @@
-import { useReveal } from '../hooks/useReveal';
-import './Contact.css';
+import { Link } from "react-router-dom";
+import { useReveal } from "../hooks/useReveal";
+import "./Contact.css";
 
 export default function Contact() {
   const sectionRef = useReveal();
@@ -9,16 +10,26 @@ export default function Contact() {
       <div className="contact-inner">
         <span className="eyebrow-label reveal">GET IN TOUCH</span>
         <h2 className="contact-headline reveal">
-          WORK<br />WITH US
+          WORK
+          <br />
+          WITH US
         </h2>
         <div className="contact-details reveal">
-          <a href="mailto:hello@studio-ix.com" className="contact-info">hello@studio-ix.com</a>
-          <span className="contact-sep" aria-hidden="true">·</span>
-          <a href="tel:+15551234567" className="contact-info">+1 555 123 4567</a>
+          <a href="mailto:hello@studio-ix.com" className="contact-info">
+            hello@studio-ix.com
+          </a>
+          <span className="contact-sep" aria-hidden="true">
+            ·
+          </span>
+          <a href="tel:+15551234567" className="contact-info">
+            +1 555 123 4567
+          </a>
         </div>
-        <a href="mailto:hello@studio-ix.com" className="contact-cta reveal">
+
+        {/* Using Link for direct component page routing */}
+        <Link to="/contact" className="contact-cta reveal">
           Let's talk →
-        </a>
+        </Link>
       </div>
     </section>
   );
