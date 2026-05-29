@@ -1,8 +1,8 @@
 .contact-page {
-  background: var(--color-bg, #f5f3ee); /* Fallback to standard light background token */
+  background: var(--color-bg, #f5f3ee);
   color: var(--color-ink, #090a0a);
   min-height: 100svh;
-  padding: 40px var(--space-md) var(--space-2xl);
+  padding: 120px var(--space-md) var(--space-2xl);
   display: flex;
   flex-direction: column;
 }
@@ -33,60 +33,77 @@
   margin: auto auto;
   display: flex;
   flex-direction: column;
-  /* FIX 1: Centers child content items horizontally within the flex column */
   align-items: center; 
-  /* FIX 2: Ensures text balances evenly if labels wrap */
   text-align: center; 
 }
 
 .contact-page-headline {
   font-family: var(--font-display);
   font-weight: 800;
-  
-  /* FIX 3: Balanced clamp floor (36px) and responsive unit (10vw) to stop mobile edge blowout */
   font-size: clamp(36px, 10vw, 120px); 
-  
   letter-spacing: -0.04em;
-  line-height: 0.9; /* Slightly increased for centered balance stack tracking */
+  line-height: 0.9;
   color: var(--color-ink);
   margin: var(--space-xs) 0 var(--space-xl);
   width: 100%;
 }
 
-/* Form Layout Configuration */
+/* --- ANIMATION WORKBENCH WRAPPER --- */
+.contact-animate-container {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: start;
+}
+
+/* Base styles for both layers staying in DOM simultaneously */
+.contact-page-form,
+.form-success-wrapper {
+  grid-area: 1 / 1 / 2 / 1; /* Overlay layers directly on top of each other */
+  width: 100%;
+  box-sizing: border-box;
+  /* Soft, cinematic cubic-bezier curve for high-end studio websites */
+  transition: 
+    opacity 0.6s cubic-bezier(0.215, 0.610, 0.355, 1),
+    transform 0.6s cubic-bezier(0.215, 0.610, 0.355, 1),
+    filter 0.6s ease;
+}
+
+/* Component active layout parameters */
+.state-visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0px);
+  pointer-events: all;
+  visibility: visible;
+}
+
+/* Component out-of-view layout parameters */
+.state-hidden {
+  opacity: 0;
+  transform: translateY(30px); /* Arrives smoothly upwards */
+  filter: blur(4px);            /* Premium subtle lens camera blur */
+  pointer-events: none;
+  visibility: hidden;
+  transition: 
+    opacity 0.4s ease, 
+    transform 0.4s ease, 
+    filter 0.4s ease, 
+    visibility 0s 0.4s; /* Delays visibility toggle until transition ends */
+}
+
+/* Special exit pathway variation for the form component to minimize overlap collisions */
+.contact-page-form.state-hidden {
+  transform: translateY(-30px); /* Form floats upwards slightly while vanishing */
+}
+
+/* Form Structural Configuration */
 .contact-page-form {
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
-  width: 100%; /* Fixes structural width context */
-}
-
-/* Large Round Action Button Container */
-.submit-form-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  
-  /* FIX 4: Centers the button to complement the new centered text layout alignment */
-  align-self: center; 
-  
-  height: 64px;
-  padding: 0 44px;
-  background: var(--color-ink);
-  color: var(--color-bg);
-  font-family: var(--font-display), sans-serif;
-  font-weight: 700;
-  font-size: 18px;
-  border: none;
-  border-radius: 100px;
-  cursor: pointer;
-  margin-top: var(--space-md);
-  transition: background var(--duration-fast) ease, transform var(--duration-fast) ease;
-}
-
-.submit-form-btn:hover {
-  background: var(--color-muted);
-  transform: translateY(-2px);
 }
 
 .form-row {
@@ -100,6 +117,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  text-align: left; /* Keep form inputs cleanly left aligned */
 }
 
 .field-group label {
@@ -110,7 +128,6 @@
   font-weight: 600;
 }
 
-/* Minimalist, line-driven inputs matching brutalist design architecture */
 .contact-page-form input,
 .contact-page-form textarea {
   width: 100%;
@@ -141,12 +158,11 @@
   border-bottom-color: var(--color-ink);
 }
 
-/* Large Round Action Button Container */
 .submit-form-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  align-self: flex-start;
+  align-self: center; 
   height: 64px;
   padding: 0 44px;
   background: var(--color-ink);
@@ -169,6 +185,9 @@
 /* Success Layout Window */
 .form-success-wrapper {
   padding: var(--space-xl) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form-success-wrapper h2 {

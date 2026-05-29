@@ -1,25 +1,48 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import emailjs from "@emailjs/browser";
 import "./ContactPage.css";
 
 export default function ContactPage() {
   const navigate = useNavigate();
+  const formRef = useRef();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  // Smooth scroll to top when page mounts
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted Data:", formData);
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+    setErrorMessage("");
+
+    emailjs
+      .sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        formRef.current,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+      )
+      .then(
+        () => {
+          setIsSubmitted(true);
+          setIsSubmitting(false);
+        },
+        (error) => {
+          console.error("EmailJS Error:", error);
+          setErrorMessage("Something went wrong. Please try again.");
+          setIsSubmitting(false);
+        },
+      );
   };
 
   const handleChange = (e) => {
@@ -29,20 +52,27 @@ export default function ContactPage() {
 
   return (
     <main className="contact-page">
-      {/* Top utility row to return home safely */}
-      <div className="contact-page-nav">
-      </div>
-
       <div className="contact-page-inner">
         <span className="eyebrow-label">GET IN TOUCH</span>
-
         <h1 className="contact-page-headline">
           START A<br />
           PROJECT
         </h1>
 
-        {!isSubmitted ? (
-          <form className="contact-page-form" onSubmit={handleSubmit}>
+        {/* Both elements stay in the DOM inside this relative container */}
+        <div className="contact-animate-container">
+          <form
+            ref={formRef}
+            className={`contact-page-form ${isSubmitted ? "state-hidden form-exit" : "state-visible"}`}
+            onSubmit={handleSubmit}
+          >
+            {errorMessage && (
+              <div
+                style={{ color: "red", fontSize: "12px", marginBottom: "10px" }}
+              >
+                {errorMessage}
+              </div>
+            )}
             <div className="form-row">
               <div className="field-group">
                 <label htmlFor="name">YOUR NAME</label>
@@ -56,7 +86,6 @@ export default function ContactPage() {
                   required
                 />
               </div>
-
               <div className="field-group">
                 <label htmlFor="email">YOUR EMAIL</label>
                 <input
@@ -70,33 +99,40 @@ export default function ContactPage() {
                 />
               </div>
             </div>
-
             <div className="field-group">
               <label htmlFor="message">THE BRIEF</label>
               <textarea
                 id="message"
                 name="message"
-                placeholder="Tell us about your timeline, goals, and project scope..."
+                placeholder="Tell us about your project..."
                 rows="6"
                 value={formData.message}
                 onChange={handleChange}
                 required
               />
             </div>
-
-            <button type="submit" className="submit-form-btn">
-              Send Message →
+            <button
+              type="submit"
+              className="submit-form-btn"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Sending..." : "Send Message →"}
             </button>
           </form>
-        ) : (
-          <div className="form-success-wrapper">
+
+          <div
+            className={`form-success-wrapper ${isSubmitted ? "state-visible" : "state-hidden"}`}
+          >
             <h2>MESSAGE SENT</h2>
             <p>
-              Thank you for reaching out. A partner from Studio IX will review
-              your brief and follow up within 24 hours.
+              Thank you! We will review your brief and follow up within 24
+              hours.
             </p>
             <button
-              onClick={() => navigate("/")}
+              onClick={() => {
+                setFormData({ name: "", email: "", message: "" });
+                setIsSubmitted(false);
+              }}
               className="return-cta"
               style={{
                 background: "none",
@@ -105,10 +141,10 @@ export default function ContactPage() {
                 cursor: "pointer",
               }}
             >
-              Return Home
+              Send Another Message
             </button>
           </div>
-        )}
+        </div>
       </div>
     </main>
   );
